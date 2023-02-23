@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      rating: {
+        type: DataTypes.FLOAT(1),
+        allowNull: false,
+        validate: {
+          min: 0,
+          max: 5,
+        },
+      },
     },
     { underscored: true }
   );
