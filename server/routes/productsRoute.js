@@ -45,16 +45,27 @@ router.post("/", (req, res) => {
 });
 
 router.put("/", (req, res) => {
-  db.product
-    .update(req.body, {
-      where: { id: req.body.id },
-    })
-    .then((result) => {
-      req.send(result);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+  const product = req.body;
+  const id = product.id;
+
+  if (!id) {
+    res.status(400).json("ID is mandatory");
+  } else {
+    db.product
+      .update(req.body, {
+        where: { id: req.body.id },
+      })
+      .then((result) => {
+        if (result == 0) {
+          res.send(`Provided ID: "${id}" do not match any product ID`);
+        } else {
+          res.send(`Product with ID: ${id} has been updated`);
+        }
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
 });
 
 router.delete("/", (req, res) => {
@@ -63,7 +74,7 @@ router.delete("/", (req, res) => {
       where: { id: req.body.id },
     })
     .then((result) => {
-      res.json(`Produkten raderades ${result}`);
+      res.json(`Product with ${req.body.id} has been deleted`);
     })
     .catch((err) => {
       res.send(err);
