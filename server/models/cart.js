@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      amount: {
+        type: DataTypes.FLOAT(1),
+      },
     },
     { underscored: true }
   );

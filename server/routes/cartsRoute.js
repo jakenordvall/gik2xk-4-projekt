@@ -4,12 +4,9 @@ const validate = require("validate.js");
 
 const constraints = {
   title: {
-    length: {
-      minimum: 2,
-      maximum: 100,
-      tooShort: "^The title has to bee atleast %{count} characters in length. ",
-      tooLong:
-        "^The title can not be longer then %{count} characters in length. ",
+    numericality: {
+      greaterThanOrEqualTo: 0.0,
+      lessThanOrEqualTo: 10000000000000,
     },
   },
 };
@@ -17,7 +14,7 @@ const constraints = {
 // "/" är rooten till products
 router.get("/", (req, res) => {
   //här måste tabellerna skrivas i singular form.
-  db.product
+  db.cart
     .findAll()
     .then((result) => {
       res.send(result);
@@ -28,13 +25,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const product = req.body;
-  const invalidData = validate(product, constraints);
+  const cart = req.body;
+  const invalidData = validate(cart, constraints);
   if (invalidData) {
     res.status(400).json(invalidData);
   } else {
-    db.product
-      .create(product)
+    db.cart
+      .create(cart)
       .then((result) => {
         res.send(result);
       })
@@ -45,19 +42,19 @@ router.post("/", (req, res) => {
 });
 
 router.put("/", (req, res) => {
-  const product = req.body;
-  const id = product.id;
+  const cart = req.body;
+  const id = cart.id;
 
   if (!id) {
     res.status(400).json("ID is mandatory");
   } else {
-    db.product
+    db.cart
       .update(req.body, {
         where: { id: req.body.id },
       })
       .then((result) => {
         if (result == 0) {
-          res.send(`Provided ID: "${id}" do not match any product ID`);
+          res.send(`Provided ID: "${id}" do not match any cart ID`);
         } else {
           res.send(`Product with ID: ${id} has been updated`);
         }
@@ -69,7 +66,7 @@ router.put("/", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-  db.product
+  db.cart
     .destroy({
       where: { id: req.body.id },
     })
