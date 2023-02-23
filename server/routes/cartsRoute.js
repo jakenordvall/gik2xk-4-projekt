@@ -5,7 +5,7 @@ const validate = require("validate.js");
 const constraints = {
   title: {
     length: {
-      minimum: 3,
+      minimum: 2,
       maximum: 100,
       tooShort: "^The title has to bee atleast %{count} characters in length. ",
       tooLong:
@@ -69,25 +69,16 @@ router.put("/", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-  const id = req.body.id;
-  if (!id) {
-    res.status(400).json("ID is mandatory");
-  } else {
-    db.product
-      .destroy({
-        where: { id: req.body.id },
-      })
-      .then((result) => {
-        if (result == 0) {
-          res.send(`Provided ID: "${id}" do not match any Product ID`);
-        } else {
-          res.send(`Product with ID: ${id} has been deleted`);
-        }
-      })
-      .catch((err) => {
-        res.send(err);
-      });
-  }
+  db.product
+    .destroy({
+      where: { id: req.body.id },
+    })
+    .then((result) => {
+      res.json(`Product with ${req.body.id} has been deleted`);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
 //detta exporteras till app.js

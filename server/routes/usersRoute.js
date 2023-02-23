@@ -3,21 +3,41 @@ const db = require("../models");
 const validate = require("validate.js");
 
 const constraints = {
-  title: {
+  firstName: {
     length: {
       minimum: 3,
       maximum: 100,
-      tooShort: "^The title has to bee atleast %{count} characters in length. ",
-      tooLong:
-        "^The title can not be longer then %{count} characters in length. ",
+      tooShort: "^Name has to bee atleast %{count} characters in length. ",
+      tooLong: "^Name can not be longer then %{count} characters in length. ",
     },
+  },
+  lastName: {
+    length: {
+      minimum: 3,
+      maximum: 100,
+      tooShort: "^Lastname has to bee atleast %{count} characters in length. ",
+      tooLong:
+        "^Lastname can not be longer then %{count} characters in length. ",
+    },
+  },
+  password: {
+    length: {
+      minimum: 3,
+      maximum: 100,
+      tooShort: "^Password has to bee atleast %{count} characters in length. ",
+      tooLong:
+        "^Password can not be longer then %{count} characters in length. ",
+    },
+  },
+  email: {
+    email: true,
   },
 };
 
 // "/" är rooten till products
 router.get("/", (req, res) => {
   //här måste tabellerna skrivas i singular form.
-  db.product
+  db.user
     .findAll()
     .then((result) => {
       res.send(result);
@@ -28,13 +48,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const product = req.body;
-  const invalidData = validate(product, constraints);
+  const user = req.body;
+  const invalidData = validate(user, constraints);
   if (invalidData) {
     res.status(400).json(invalidData);
   } else {
-    db.product
-      .create(product)
+    db.user
+      .create(user)
       .then((result) => {
         res.send(result);
       })
@@ -45,21 +65,21 @@ router.post("/", (req, res) => {
 });
 
 router.put("/", (req, res) => {
-  const product = req.body;
-  const id = product.id;
+  const user = req.body;
+  const id = user.id;
 
   if (!id) {
     res.status(400).json("ID is mandatory");
   } else {
-    db.product
+    db.user
       .update(req.body, {
         where: { id: req.body.id },
       })
       .then((result) => {
         if (result == 0) {
-          res.send(`Provided ID: "${id}" do not match any product ID`);
+          res.send(`Provided ID: "${id}" do not match any User ID`);
         } else {
-          res.send(`Product with ID: ${id} has been updated`);
+          res.send(`User with ID: ${id} has been updated`);
         }
       })
       .catch((err) => {
@@ -73,15 +93,15 @@ router.delete("/", (req, res) => {
   if (!id) {
     res.status(400).json("ID is mandatory");
   } else {
-    db.product
+    db.user
       .destroy({
         where: { id: req.body.id },
       })
       .then((result) => {
         if (result == 0) {
-          res.send(`Provided ID: "${id}" do not match any Product ID`);
+          res.send(`Provided ID: "${id}" do not match any User ID`);
         } else {
-          res.send(`Product with ID: ${id} has been deleted`);
+          res.send(`User with ID: ${id} has been deleted`);
         }
       })
       .catch((err) => {
