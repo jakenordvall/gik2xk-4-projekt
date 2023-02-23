@@ -12,6 +12,11 @@ const constraints = {
         "^The title can not be longer then %{count} characters in length. ",
     },
   },
+  imageUrl: {
+    url: {
+      message: "^URL is wrongly formatted",
+    },
+  },
 };
 
 // "/" är rooten till products
