@@ -1,6 +1,18 @@
 const router = require("express").Router();
-
 const db = require("../models");
+const validate = require("validate.js");
+
+const constraints = {
+  title: {
+    length: {
+      minimum: 2,
+      maximum: 100,
+      tooShort: "^The title has to bee atleast %{count} characters in length. ",
+      tooLong:
+        "^The title can not be longer then %{count} characters in length. ",
+    },
+  },
+};
 
 // "/" är rooten till products
 router.get("/", (req, res) => {
@@ -16,14 +28,20 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  db.product
-    .create(req.body)
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+  const product = req.body;
+  const invalidData = validate(product, constraints);
+  if (invalidData) {
+    res.status(400).json(invalidData);
+  } else {
+    db.product
+      .create(product)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
 });
 
 router.put("/", (req, res) => {
