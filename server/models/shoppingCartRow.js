@@ -4,13 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     "shoppingCartRow",
     {
-      id: {
+      quantity: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      amount: {
-        type: DataTypes.FLOAT(1),
+        allowNull: false,
+        defaultValue: 1,
       },
     },
     { underscored: true }

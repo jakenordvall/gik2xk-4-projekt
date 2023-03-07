@@ -2,7 +2,6 @@ const router = require("express").Router();
 const db = require("../models");
 const validate = require("validate.js");
 const cartService = require("../services/cartService");
-const user = require("../models/user");
 
 const constraints = {
   title: {
@@ -42,7 +41,7 @@ router.post("/", (req, res) => {
       });
   }
 });
-
+//add item to cart (going to be a row in shoppingCartRow)
 router.post("/:cartId/addProduct", async (req, res) => {
   try {
     const cartId = req.params.cartId;
@@ -51,8 +50,27 @@ router.post("/:cartId/addProduct", async (req, res) => {
     const cart = await db.cart.findByPk(cartId);
 
     const product = await db.product.findByPk(productId);
+    const productPrice = product.price;
 
-    await cart.addProduct(product);
+    // Kolla om produkten redan finns i kundvagnen
+    const cartRow = await db.shoppingCartRow.findOne({
+      where: { cartId, productId },
+    });
+
+    if (cartRow) {
+      // Produkten finns redan i kundvagnen, öka kvantiteten på raden
+      await cartRow.increment("quantity", { by: 1 });
+    } else {
+      // Produkten finns inte i kundvagnen, lägg till den och sätt kvantiteten till 1
+      await cart.addProduct(product, {
+        through: { quantity: 1 },
+      });
+    }
+
+    await cart.increment({
+      total: productPrice,
+      amount: 1,
+    });
 
     res.send(`Product with ${productId} has been added to cart`);
   } catch (error) {

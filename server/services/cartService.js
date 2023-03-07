@@ -3,9 +3,14 @@ const db = require("../models");
 async function getCartById(cartId) {
   try {
     const cart = await db.cart.findOne({
-      where: { id: cartId, include: [db.product] },
+      where: { id: cartId },
+      include: [
+        {
+          model: db.product,
+          attributes: ["id", "title", "price", "description", "imageUrl"],
+        },
+      ],
     });
-    const products = await cart.getProducts();
 
     return cart;
   } catch (error) {
