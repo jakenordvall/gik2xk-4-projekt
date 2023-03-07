@@ -111,5 +111,17 @@ router.delete("/", (req, res) => {
   }
 });
 
+router.get("/:id", (req, res) => {
+  const userId = req.params.id;
+  userService
+    .getByUser(userId)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
 //detta exporteras till app.js
 module.exports = router;
