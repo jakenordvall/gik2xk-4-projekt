@@ -50,6 +50,13 @@ db.cart.belongsTo(db.user, {
   onDelete: "CASCADE",
 });
 db.user.hasMany(db.cart, { allowNull: false });
+
+//ratings products relation:
+db.rating.belongsTo(db.product, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
+db.product.hasMany(db.rating, { allowNull: false });
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

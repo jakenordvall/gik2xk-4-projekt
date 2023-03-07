@@ -1,3 +1,4 @@
+const { async } = require("validate.js");
 const db = require("../models");
 
 async function getAll() {

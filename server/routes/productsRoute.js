@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
 const validate = require("validate.js");
+const productService = require("../services/productService");
 
 const constraints = {
   title: {
@@ -22,8 +23,8 @@ const constraints = {
 // "/" är rooten till products
 router.get("/", (req, res) => {
   //här måste tabellerna skrivas i singular form.
-  db.product
-    .findAll()
+  productService
+    .getAllProducts()
     .then((result) => {
       res.send(result);
     })
@@ -93,6 +94,18 @@ router.delete("/", (req, res) => {
         res.send(err);
       });
   }
+});
+
+router.get("/:id", (req, res) => {
+  const userId = req.params.id;
+  productService
+    .getByProduct(userId)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
 //detta exporteras till app.js
