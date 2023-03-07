@@ -56,7 +56,7 @@ router.put("/", (req, res) => {
         if (result == 0) {
           res.send(`Provided ID: "${id}" do not match any cart ID`);
         } else {
-          res.send(`Product with ID: ${id} has been updated`);
+          res.send(`Cart with ID: ${id} has been updated`);
         }
       })
       .catch((err) => {

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
 const validate = require("validate.js");
+const userService = require("../services/userService");
 
 const constraints = {
   firstName: {
@@ -37,8 +38,8 @@ const constraints = {
 // "/" är rooten till products
 router.get("/", (req, res) => {
   //här måste tabellerna skrivas i singular form.
-  db.user
-    .findAll()
+  userService
+    .getAll()
     .then((result) => {
       res.send(result);
     })
