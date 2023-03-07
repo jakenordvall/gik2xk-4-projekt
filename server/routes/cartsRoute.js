@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const db = require("../models");
 const validate = require("validate.js");
+const cartService = require("../services/cartService");
+const user = require("../models/user");
 
 const constraints = {
   title: {
@@ -41,6 +43,23 @@ router.post("/", (req, res) => {
   }
 });
 
+router.post("/:cartId/addProduct", async (req, res) => {
+  try {
+    const cartId = req.params.cartId;
+    const productId = req.body.productId;
+
+    const cart = await db.cart.findByPk(cartId);
+
+    const product = await db.product.findByPk(productId);
+
+    await cart.addProduct(product);
+
+    res.send(`Product with ${productId} has been added to cart`);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 router.put("/", (req, res) => {
   const cart = req.body;
   const id = cart.id;
@@ -72,6 +91,19 @@ router.delete("/", (req, res) => {
     })
     .then((result) => {
       res.json(`Product with ${req.body.id} has been deleted`);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+router.get("/:id", (req, res) => {
+  const cartId = req.params.id;
+
+  cartService
+    .getCartById(cartId)
+    .then((result) => {
+      res.send(result);
     })
     .catch((err) => {
       res.send(err);
