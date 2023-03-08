@@ -1,5 +1,6 @@
 import "./App.css";
-import Welcome from "./views/Welcome.js";
+import Welcome from "./views/Welcome";
+import Products from "./views/Products";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 
@@ -8,7 +9,8 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Welcome />}></Route>
+        <Route exact path="/" element={<Welcome />}></Route>
+        <Route exact path="/products" element={<Products />}></Route>
       </Routes>
     </>
   );

@@ -14,7 +14,7 @@ function Navbar() {
   return (
     <>
       <Box>
-        <AppBar position="absolute" sx={{ backgroundColor: "transparent" }}>
+        <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
           <Toolbar>
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
               <IconButton
