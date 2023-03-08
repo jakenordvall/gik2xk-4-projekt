@@ -32,7 +32,7 @@ function Welcome() {
             fontFamily: "Climate Crisis, cursive",
             fontSize: 100,
             background:
-              "linear-gradient(90deg, hsla(43, 83%, 93%, 1) 1%, hsla(305, 64%, 83%, 1) 100%, hsla(289, 79%, 68%, 1) 100%)",
+              "linear-gradient(90deg,  hsla(305, 64%, 83%, 1) 50%, hsla(289, 79%, 68%, 1) 100%)",
             "-webkit-background-clip": "text",
             "-webkit-text-fill-color": "transparent",
           }}
