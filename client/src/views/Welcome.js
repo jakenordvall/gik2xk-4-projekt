@@ -1,6 +1,7 @@
 import { useLottie } from "lottie-react";
 import background_animation from "../resources/background_animation.json";
 import { Container, Box, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import "./Welcome.css";
 
 function Welcome() {
@@ -27,13 +28,35 @@ function Welcome() {
         <Typography
           variant="h2"
           color="primary"
-          sx={{ fontFamily: "Climate Crisis, cursive", fontSize: 100 }}
+          sx={{
+            fontFamily: "Climate Crisis, cursive",
+            fontSize: 100,
+            background:
+              "linear-gradient(90deg, hsla(43, 83%, 93%, 1) 1%, hsla(305, 64%, 83%, 1) 100%, hsla(289, 79%, 68%, 1) 100%)",
+            "-webkit-background-clip": "text",
+            "-webkit-text-fill-color": "transparent",
+          }}
         >
           Welcome to our very cool donut shop
         </Typography>
-        <Button variant="contained" size="large" sx={{ p: 2, mt: 3 }}>
-          Explore the delicious donuts
-        </Button>
+        <Link to="/products" style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              p: 2,
+              mt: 3,
+              fontFamily: "Happy Monkey, cursive",
+              fontWeight: "bold",
+              background: "#efb8eb",
+              ":hover": {
+                background: "#d66dee",
+              },
+            }}
+          >
+            Explore delicious donuts
+          </Button>
+        </Link>
       </Box>
     </Box>
   );
