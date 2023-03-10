@@ -1,9 +1,9 @@
-import { Container, Box, Typography, Button } from "@mui/material";
+import ProductList from "../components/ProductList";
+import { useLocation } from "react-router-dom";
+
 function Products() {
-  return (
-    <>
-      <h1>MMMMMM DONUTS</h1>
-    </>
-  );
+  const location = useLocation();
+
+  return <ProductList pathname={location.pathname} />;
 }
 export default Products;

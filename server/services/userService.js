@@ -10,10 +10,10 @@ async function getAll() {
   }
 }
 
-async function getByUser(userId) {
+async function getByUser(firstName) {
   try {
     const user = await db.user.findOne({
-      where: { id: userId },
+      where: { firstName: firstName },
       include: [db.cart],
     });
 

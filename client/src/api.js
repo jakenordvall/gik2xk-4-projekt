@@ -1,2 +1,5 @@
 import axios from "axios";
-//fortsätter här senare för att hantera backend kommunikation
+
+axios.defaults.baseURL = "http://localhost:5000";
+
+export default axios;

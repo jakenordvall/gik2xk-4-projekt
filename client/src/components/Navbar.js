@@ -9,8 +9,14 @@ import {
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LoginModal from "./LoginModal";
+
+import { useState } from "react";
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [userState, setUserState] = useState("");
+
   return (
     <>
       <Box>
@@ -43,6 +49,7 @@ function Navbar() {
               <ShoppingCartIcon />
             </IconButton>
             <Button
+              onClick={() => setOpen(true)}
               sx={{
                 backgroundColor: "#efb8eb",
                 ":hover": {
@@ -58,6 +65,7 @@ function Navbar() {
           </Toolbar>
         </AppBar>
       </Box>
+      <LoginModal open={open} setOpen={setOpen}></LoginModal>
     </>
   );
 }

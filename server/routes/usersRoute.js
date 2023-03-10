@@ -111,10 +111,11 @@ router.delete("/", (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {
-  const userId = req.params.id;
+router.get("/:name", (req, res) => {
+  const firstName = req.params.name;
+  console.log(req);
   userService
-    .getByUser(userId)
+    .getByUser(firstName)
     .then((result) => {
       res.send(result);
     })
