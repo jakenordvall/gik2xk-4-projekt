@@ -2,25 +2,26 @@ import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getOne } from "../models/UserModel";
 
-function LoginModal({ open, setOpen }) {
+function LoginModal({ open, setOpen, signedIn, setSignedIn, user, setUser }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     setOpen(false);
-    const test = getOne(user)
-      .then((result) => {
-        if (result) {
-          console.log(result);
+    getOne(userName).then((result) => {
+      if (result) {
+        if (result.firstName === userName && result.password === password) {
+          setUser(result);
+          setSignedIn(true);
         } else {
-          console.log("User not found");
+          alert("Password is wrong");
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      } else {
+        alert("User not found");
+      }
+    });
   };
 
-  const [user, setUser] = useState("");
-  console.log(user);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
@@ -41,9 +42,9 @@ function LoginModal({ open, setOpen }) {
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
-            value={user}
+            value={userName}
             onChange={(e) => {
-              setUser(e.target.value);
+              setUserName(e.target.value);
             }}
             sx={{ mb: 2 }}
             required
@@ -52,6 +53,10 @@ function LoginModal({ open, setOpen }) {
             autoFocus
           />
           <TextField
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             sx={{ mb: 2, mt: 2 }}
             required
             fullWidth

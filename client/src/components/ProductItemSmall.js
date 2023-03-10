@@ -40,10 +40,7 @@ function ProductItemSmall({ product }) {
           height="200"
         ></CardMedia>
       </Link>
-      <CardActions
-        container
-        sx={{ display: "flex", justifyContent: "space-between" }}
-      >
+      <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button
           variant="contained"
           size="small"

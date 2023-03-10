@@ -1,3 +1,4 @@
+const { BOOLEAN } = require("sequelize");
 const sequelize = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
@@ -36,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           len: [3, 100],
         },
+      },
+      admin: {
+        type: BOOLEAN,
+        defaultValue: false,
       },
     },
     { underscored: true, onDelete: "CASCADE" }
