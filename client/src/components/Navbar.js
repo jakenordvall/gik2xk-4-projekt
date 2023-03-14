@@ -78,7 +78,7 @@ function Navbar() {
                   mr: 2,
                 }}
               >
-                Logut
+                Logout
               </Button>
             </Toolbar>
           </AppBar>
