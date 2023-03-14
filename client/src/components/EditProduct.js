@@ -12,19 +12,19 @@ import { update } from "../models/ProductModel";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 
-function EditProduct({ product }) {
-  const [updatedProduct, setUpdatedProduct] = useState({ product });
+function EditProduct({ product, setRerender }) {
+  const [updatedProduct, setUpdatedProduct] = useState({});
+
   useEffect(() => {
     setUpdatedProduct(product);
-  });
-
-  console.log(updatedProduct);
+  }, [product]);
 
   async function handleSubmit(event) {
     event.preventDefault();
     try {
       await update(updatedProduct);
-      setUpdatedProduct(product);
+      setUpdatedProduct({ product });
+      setRerender(true);
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +55,7 @@ function EditProduct({ product }) {
         left="55%"
       >
         <TextField
-          value={updatedProduct.title}
+          value={updatedProduct.title || ""}
           onChange={(e) => {
             setUpdatedProduct({
               ...updatedProduct,
@@ -67,10 +67,48 @@ function EditProduct({ product }) {
           fullWidth
           label="Title"
           autoFocus
-          helperText={product.title}
-          InputLabelProps={{
-            shrink: true,
+        />
+        <TextField
+          value={updatedProduct.price || 0}
+          onChange={(e) => {
+            setUpdatedProduct({
+              ...updatedProduct,
+              price: e.target.value,
+            });
           }}
+          sx={{ mb: 2 }}
+          required
+          fullWidth
+          label="Price"
+          autoFocus
+        />
+        <TextField
+          value={updatedProduct.description || ""}
+          onChange={(e) => {
+            setUpdatedProduct({
+              ...updatedProduct,
+              description: e.target.value,
+            });
+          }}
+          sx={{ mb: 2 }}
+          required
+          fullWidth
+          label="Description"
+          autoFocus
+        />
+        <TextField
+          value={updatedProduct.imageUrl || ""}
+          onChange={(e) => {
+            setUpdatedProduct({
+              ...updatedProduct,
+              imageUrl: e.target.value,
+            });
+          }}
+          sx={{ mb: 2 }}
+          required
+          fullWidth
+          label="Image Url"
+          autoFocus
         />
 
         <Button type="submit" variant="contained">

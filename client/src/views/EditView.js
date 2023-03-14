@@ -7,14 +7,16 @@ import EditProduct from "../components/EditProduct";
 function EditView() {
   const params = useParams();
   const productId = params.id;
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState({});
+  const [rerender, setRerender] = useState(false);
   useEffect(() => {
     getOne(productId).then((product) => setProduct(product));
-  }, [productId]);
+    setRerender(false);
+  }, [productId, rerender]);
 
   return (
     <>
-      <EditProduct product={product} />
+      <EditProduct product={product} setRerender={setRerender} />
     </>
   );
 }
