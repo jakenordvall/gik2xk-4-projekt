@@ -9,7 +9,7 @@ import {
 
 function ProductItemLarge({ product }) {
   return (
-    <Card elevation={5} sx={{ marginTop: "1rem", marginX: "1rem" }}>
+    <Card elevation={5} sx={{ mt: 10, marginX: "1rem" }}>
       <CardMedia
         sx={{ height: 300, width: "100%" }}
         image={

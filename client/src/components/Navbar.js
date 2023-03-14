@@ -25,7 +25,7 @@ function Navbar() {
     return (
       <>
         <Box>
-          <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
+          <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
             <Toolbar>
               <Box
                 sx={{

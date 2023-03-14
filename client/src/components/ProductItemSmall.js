@@ -55,7 +55,7 @@ function ProductItemSmall({ product }) {
         >
           Add to cart
         </Button>
-        <Rating name="read-only" value={product.ratings} readOnly />
+        <Rating name="read-only" value={5} readOnly />
         <Typography
           sx={{
             fontFamily: "Happy Monkey, cursive",

@@ -12,7 +12,7 @@ function ProductList({ pathname }) {
   }, [pathname]);
 
   return (
-    <Grid container>
+    <Grid container sx={{ mt: 10 }}>
       {products.map((product) => (
         <Grid item key={`productId_${product.id}`} xs={12} sm={12} md={3}>
           <ProductItemSmall product={product} />

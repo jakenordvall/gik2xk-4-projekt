@@ -1,4 +1,5 @@
 import "./ProductItemSmall.css";
+import { remove } from "../models/ProductModel";
 
 import {
   Card,
@@ -7,63 +8,71 @@ import {
   CardMedia,
   CardActions,
   Button,
-  Rating,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function ProductItemSmallAdmin({ product }) {
+function ProductItemSmallAdmin({ product, setClicked }) {
+  function handleClick() {
+    remove(product.id);
+    setClicked(true);
+  }
+
   return (
     <Card elevation={10} sx={{ marginTop: "1rem", marginX: "1rem" }}>
-      <Link to={`/products/${product.id}`}>
-        <CardHeader
-          title={
-            <Typography
-              variant="h5"
-              component="h3"
-              sx={{
-                fontFamily: "Happy Monkey, cursive",
-                fontWeight: "bold",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {product.title}
-            </Typography>
-          }
-        />
-        <CardMedia
-          component="img"
-          image={
-            product.imageUrl ||
-            `${process.env.PUBLIC_URL}/images/placeholder.png`
-          }
-          alt={`bild till ${product.title}`}
-          height="200"
-        ></CardMedia>
-      </Link>
-      <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
+      <CardHeader
+        title={
+          <Typography
+            variant="h5"
+            component="h3"
+            sx={{
+              fontFamily: "Happy Monkey, cursive",
+              fontWeight: "bold",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {product.title}
+          </Typography>
+        }
+      />
+      <CardMedia
+        component="img"
+        image={
+          product.imageUrl || `${process.env.PUBLIC_URL}/images/placeholder.png`
+        }
+        alt={`bild till ${product.title}`}
+        height="200"
+      ></CardMedia>
+
+      <CardActions sx={{ justifyContent: "center" }}>
         <Button
+          onClick={() => handleClick()}
           variant="contained"
-          size="small"
+          size="large"
           sx={{
             fontFamily: "Happy Monkey, cursive",
             fontWeight: "bold",
-            background: "#efb8eb",
+            background: "#f89b29",
             ":hover": {
-              background: "#d66dee",
+              background: "#ff0f7b",
             },
           }}
         >
-          Add to cart
+          Remove
         </Button>
-        <Rating name="read-only" value={product.ratings} readOnly />
-        <Typography
+        <Button
+          variant="contained"
+          size="large"
           sx={{
             fontFamily: "Happy Monkey, cursive",
             fontWeight: "bold",
+            background: "#60efff",
+            ":hover": {
+              background: "#0061ff",
+            },
           }}
         >
-          Price: {product.price}kr
-        </Typography>
+          Edit
+        </Button>
       </CardActions>
     </Card>
   );
