@@ -19,5 +19,6 @@ app.use("/products", require("./routes/productsRoute"));
 app.use("/users", require("./routes/usersRoute"));
 app.use("/ratings", require("./routes/ratingsRoute"));
 app.use("/carts", require("./routes/cartsRoute"));
+app.use("/adminView", require("./routes/productsRoute"));
 
 module.exports = app;
