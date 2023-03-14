@@ -1,5 +1,6 @@
 import "./ProductItemSmall.css";
 import { remove } from "../models/ProductModel";
+import AdminEditView from "../views/EditView";
 
 import {
   Card,
@@ -59,20 +60,22 @@ function ProductItemSmallAdmin({ product, setClicked }) {
         >
           Remove
         </Button>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            fontFamily: "Happy Monkey, cursive",
-            fontWeight: "bold",
-            background: "#60efff",
-            ":hover": {
-              background: "#0061ff",
-            },
-          }}
-        >
-          Edit
-        </Button>
+        <Link to={`/products/edit/${product.id}`}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              fontFamily: "Happy Monkey, cursive",
+              fontWeight: "bold",
+              background: "#60efff",
+              ":hover": {
+                background: "#0061ff",
+              },
+            }}
+          >
+            Edit
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

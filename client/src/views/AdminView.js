@@ -7,6 +7,7 @@ import { create } from "../models/ProductModel";
 
 function AdminView() {
   async function handleSubmit(event) {
+    event.preventDefault();
     try {
       create(product).then(() => {
         alert("Product is added");
@@ -25,14 +26,13 @@ function AdminView() {
   const [product, setProduct] = useState(emptyProduct);
 
   const location = useLocation();
-  console.log(product);
 
   return (
     <>
       <Container maxWidth="100vh" sx={{ mt: 10 }}>
         <Grid container sx={{}}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6} sx={{}}>
-            <ProductListAdmin pathname={location.pathname} />
+            <ProductListAdmin pathname={location.pathname} product={product} />
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <Box
@@ -40,7 +40,7 @@ function AdminView() {
               onSubmit={handleSubmit}
               sx={{ mr: 5 }}
               position="fixed"
-              top={"40%"}
+              top={"30%"}
               left="55%"
             >
               <Typography

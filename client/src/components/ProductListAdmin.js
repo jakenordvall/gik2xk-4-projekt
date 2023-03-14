@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { getAll } from "../models/ProductModel";
 import ProductItemSmallAdmin from "./ProductItemSmallAdmin";
 
-function ProductListAdmin({ pathname }) {
+function ProductListAdmin({ pathname, product }) {
   const [products, setProducts] = useState([]);
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     getAll(pathname).then((products) => setProducts(products));
     setClicked(false);
-  }, [pathname, clicked]);
+  }, [pathname, clicked, product]);
 
   return (
     <Grid container>
