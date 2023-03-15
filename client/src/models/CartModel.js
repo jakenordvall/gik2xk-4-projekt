@@ -11,8 +11,19 @@ export async function createCart(userId) {
   }
 }
 
-export async function addProductToCart(cartId, productId) {
-  const result = await api.post(`/${cartId}/addProduct"`, { productId });
+export async function addProductToCart({ cartId, productId }) {
+  const result = await api.post(`/carts/${cartId}/addProduct`, { productId });
+  if (result.status === 200) {
+    return result.data;
+  } else {
+    console.log(result.status);
+    console.log(result.data);
+    return {};
+  }
+}
+
+export async function getCartById(cartId) {
+  const result = await api.get(`/carts/${cartId}`);
   if (result.status === 200) {
     return result.data;
   } else {

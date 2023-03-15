@@ -12,6 +12,7 @@ import {
   Rating,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { addProductToCart } from "../models/CartModel";
 
 function ProductItemSmall({ product }) {
   const { signedInUser } = useContext(userContext);
@@ -46,10 +47,12 @@ function ProductItemSmall({ product }) {
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button
           onClick={() => {
-            if (signedInUser && signedInUser.carts.length > 0) {
-              let cartId = signedInUser.carts[0].id;
-              let userId = signedInUser.id;
-              console.log(cartId, userId);
+            if (signedInUser && signedInUser.cart) {
+              let cartId = signedInUser.cart.id;
+              let productId = product.id;
+              addProductToCart({ cartId, productId }).then(() => {
+                alert(`Product ${product.title} has been added to your cart`);
+              });
             } else {
               alert("U have to log in");
             }

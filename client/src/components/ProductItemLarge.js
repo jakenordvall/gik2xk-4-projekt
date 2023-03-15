@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { userContext } from "../App";
 import { useContext } from "react";
+import { addProductToCart } from "../models/CartModel";
 
 function ProductItemLarge({ product }) {
   const { signedInUser } = useContext(userContext);
@@ -31,8 +32,12 @@ function ProductItemLarge({ product }) {
       <CardActions>
         <Button
           onClick={() => {
-            if (signedInUser && signedInUser.carts.length > 0) {
-              console.log(signedInUser);
+            if (signedInUser && signedInUser.cart) {
+              let cartId = signedInUser.cart.id;
+              let productId = product.id;
+              addProductToCart({ cartId, productId }).then(() => {
+                alert(`Product ${product.title} has been added to your cart`);
+              });
             } else {
               alert("U have to log in");
             }

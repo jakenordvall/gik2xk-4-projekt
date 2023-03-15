@@ -24,8 +24,9 @@ function Navbar({ setSignedInUser }) {
   useEffect(() => {
     setSignedInUser(user);
 
-    if (user && user.carts.length === 0) {
+    if (user && !user.cart) {
       createCart(user.id);
+      console.log("created cart");
     }
   }, [user]);
 
@@ -73,9 +74,7 @@ function Navbar({ setSignedInUser }) {
                 </Link>
               </Box>
               <Link
-                to={`carts/${
-                  user.carts && user.carts.length > 0 ? user.carts[0].id : ""
-                }`}
+                to={`carts/${user.cart ? user.cart.id : ""}`}
                 style={{ textDecoration: "none" }}
               >
                 <IconButton aria-label="cart" sx={{ mr: 2 }}>
@@ -127,9 +126,7 @@ function Navbar({ setSignedInUser }) {
                 </Link>
               </Box>
               <Link
-                to={`carts/${
-                  user.carts && user.carts.length > 0 ? user.carts[0].id : ""
-                }`}
+                to={`carts/${user.cart ? user.cart.id : ""}`}
                 style={{ textDecoration: "none" }}
               >
                 <IconButton aria-label="cart" sx={{ mr: 2 }}>
