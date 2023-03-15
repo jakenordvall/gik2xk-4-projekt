@@ -16,6 +16,8 @@ function CartView() {
         setCart(result);
         setCartProducts(result.products);
       });
+    } else {
+      setCartProducts(null);
     }
   }, [signedInUser]);
 
@@ -28,8 +30,10 @@ function CartView() {
               {product.title} quantity {product.shoppingCartRow.quantity}
             </h1>
           ))
-        ) : (
+        ) : !cartProducts ? (
           <h1>You have to log in</h1>
+        ) : (
+          <h1>Cart is empty</h1>
         )}
       </Container>
     </>
