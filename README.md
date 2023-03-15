@@ -11,8 +11,6 @@ Våran färg: #efb8eb
 
 TODO:
 
-1. När user loggar in checka ifall den har en cart, om ej, skapa en
-2. Fixa så at kunden kan lägga till produkter i kart
-3. Fixa cartvy
-4. Fixa rating och rating lista
-5. Design
+1. Fixa rating och rating lista och kunna lägga till rating
+2. Design
+3. Fixa conditions så att när en user med cart loggar ut då bör sidan ej crasha

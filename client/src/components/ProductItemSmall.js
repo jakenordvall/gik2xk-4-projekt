@@ -1,6 +1,7 @@
 import "./ProductItemSmall.css";
 import { userContext } from "../App";
 import { useContext } from "react";
+import ProductRating from "./ProductRating";
 
 import {
   Card,
@@ -70,7 +71,7 @@ function ProductItemSmall({ product }) {
         >
           Add to cart
         </Button>
-        <Rating name="read-only" value={5} readOnly />
+        <ProductRating rating={product.ratings} />
         <Typography
           sx={{
             fontFamily: "Happy Monkey, cursive",

@@ -128,5 +128,19 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.delete("/:cartId/deleteProduct/:productId", (req, res) => {
+  const cartId = req.params.cartId;
+  const productId = req.params.productId;
+
+  cartService
+    .deleteCartProduct(cartId, productId)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
 //detta exporteras till app.js
 module.exports = router;

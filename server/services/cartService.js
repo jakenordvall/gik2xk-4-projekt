@@ -18,4 +18,33 @@ async function getCartById(cartId) {
   }
 }
 
-module.exports = { getCartById };
+async function deleteCartProduct(cartId, productId) {
+  try {
+    const cart = await db.cart.findByPk(cartId);
+    const product = await db.product.findByPk(productId);
+
+    // Find the shoppingCartRow record
+    const cartRow = await db.shoppingCartRow.findOne({
+      where: { cartId, productId },
+    });
+
+    if (cartRow) {
+      // Update the cart's total and amount values
+      await cart.decrement({
+        total: product.price * cartRow.quantity,
+        amount: cartRow.quantity,
+      });
+
+      // Delete the shoppingCartRow record
+      await cartRow.destroy();
+      return { message: `Product with ID: ${productId} removed from cart` };
+    } else {
+      throw new Error(`Product with ID: ${productId} not found in cart`);
+    }
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+module.exports = { getCartById, deleteCartProduct };

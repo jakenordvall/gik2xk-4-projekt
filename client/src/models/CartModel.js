@@ -32,3 +32,16 @@ export async function getCartById(cartId) {
     return {};
   }
 }
+
+export async function deleteCartProduct({ cartId, productId }) {
+  const result = await api.delete(
+    `/carts/${cartId}/deleteProduct/${productId}`
+  );
+  if (result.status === 200) {
+    return result.data;
+  } else {
+    console.log(result.status);
+    console.log(result.data);
+    return {};
+  }
+}
