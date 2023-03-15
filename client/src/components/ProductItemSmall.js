@@ -1,4 +1,6 @@
 import "./ProductItemSmall.css";
+import { userContext } from "../App";
+import { useContext } from "react";
 
 import {
   Card,
@@ -12,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 
 function ProductItemSmall({ product }) {
+  const { signedInUser } = useContext(userContext);
   return (
     <Card elevation={10} sx={{ marginTop: "1rem", marginX: "1rem" }}>
       <Link to={`/products/${product.id}`}>
@@ -42,6 +45,15 @@ function ProductItemSmall({ product }) {
       </Link>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button
+          onClick={() => {
+            if (signedInUser && signedInUser.carts.length > 0) {
+              let cartId = signedInUser.carts[0].id;
+              let userId = signedInUser.id;
+              console.log(cartId, userId);
+            } else {
+              alert("U have to log in");
+            }
+          }}
           variant="contained"
           size="small"
           sx={{

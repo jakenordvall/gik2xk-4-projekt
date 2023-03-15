@@ -13,13 +13,22 @@ import LoginModal from "./LoginModal";
 
 import EditIcon from "@mui/icons-material/Edit";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createCart } from "../models/CartModel";
 
-function Navbar() {
+function Navbar({ setSignedInUser }) {
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [user, setUser] = useState(null);
-  console.log(user);
+
+  useEffect(() => {
+    setSignedInUser(user);
+
+    if (user && user.carts.length === 0) {
+      createCart(user.id);
+    }
+  }, [user]);
+
   //admin state
   if (signedIn && user.admin === true) {
     return (
@@ -63,11 +72,21 @@ function Navbar() {
                   </Typography>
                 </Link>
               </Box>
-              <IconButton aria-label="cart" sx={{ mr: 2 }}>
-                <ShoppingCartIcon />
-              </IconButton>
+              <Link
+                to={`carts/${
+                  user.carts && user.carts.length > 0 ? user.carts[0].id : ""
+                }`}
+                style={{ textDecoration: "none" }}
+              >
+                <IconButton aria-label="cart" sx={{ mr: 2 }}>
+                  <ShoppingCartIcon />
+                </IconButton>
+              </Link>
               <Button
-                onClick={() => setSignedIn(false)}
+                onClick={() => {
+                  setSignedIn(false);
+                  setSignedInUser(null);
+                }}
                 sx={{
                   backgroundColor: "#efb8eb",
                   ":hover": {
@@ -107,11 +126,21 @@ function Navbar() {
                   </Typography>
                 </Link>
               </Box>
-              <IconButton aria-label="cart" sx={{ mr: 2 }}>
-                <ShoppingCartIcon />
-              </IconButton>
+              <Link
+                to={`carts/${
+                  user.carts && user.carts.length > 0 ? user.carts[0].id : ""
+                }`}
+                style={{ textDecoration: "none" }}
+              >
+                <IconButton aria-label="cart" sx={{ mr: 2 }}>
+                  <ShoppingCartIcon />
+                </IconButton>
+              </Link>
               <Button
-                onClick={() => setSignedIn(false)}
+                onClick={() => {
+                  setSignedIn(false);
+                  setSignedInUser({});
+                }}
                 sx={{
                   backgroundColor: "#efb8eb",
                   ":hover": {

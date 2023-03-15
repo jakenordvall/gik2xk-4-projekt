@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
     res.status(400).json(invalidData);
   } else {
     db.cart
-      .create(cart)
+      .create({ ...cart, userId: cart.userId }) // Associate the cart with the user
       .then((result) => {
         res.send(result);
       })

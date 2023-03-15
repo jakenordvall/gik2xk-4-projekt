@@ -6,8 +6,11 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import { userContext } from "../App";
+import { useContext } from "react";
 
 function ProductItemLarge({ product }) {
+  const { signedInUser } = useContext(userContext);
   return (
     <Card elevation={5} sx={{ mt: 10, marginX: "1rem" }}>
       <CardMedia
@@ -27,6 +30,13 @@ function ProductItemLarge({ product }) {
       </CardContent>
       <CardActions>
         <Button
+          onClick={() => {
+            if (signedInUser && signedInUser.carts.length > 0) {
+              console.log(signedInUser);
+            } else {
+              alert("U have to log in");
+            }
+          }}
           fullWidth
           variant="contained"
           size="small"
