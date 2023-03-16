@@ -142,7 +142,7 @@ function CartView() {
                 fontSize: "1.5rem",
               }}
             >
-              Total: {cart.total} SEK
+              {signedInUser ? `Total: ${cart.total} SEK` : "Total: 0 SEK"}
             </Typography>
             <Button
               variant="contained"
