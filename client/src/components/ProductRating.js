@@ -8,7 +8,14 @@ function ProductRating(ratings) {
   });
   const finalValue = ratingArray.length > 0 ? sum / ratingArray.length : 0;
 
-  return <Rating name="read-only" value={finalValue} readOnly />;
+  return (
+    <Rating
+      name="half-rating-read"
+      precision={0.5}
+      value={finalValue}
+      readOnly
+    />
+  );
 }
 
 export default ProductRating;

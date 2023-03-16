@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
 const validate = require("validate.js");
+const { createRating } = require("../services/ratingService");
 
 const constraints = {
   rating: {
@@ -81,6 +82,18 @@ router.delete("/", (req, res) => {
     .catch((err) => {
       res.send(err);
     });
+});
+
+router.post("/:productId/:rating", (req, res) => {
+  const rating = parseFloat(req.params.rating);
+  const productId = parseInt(req.params.productId);
+  console.log(rating, productId);
+  const invalidData = validate(rating, productId, constraints);
+  if (invalidData) {
+    res.status(400).json(invalidData);
+  } else {
+    createRating(productId, rating);
+  }
 });
 
 //detta exporteras till app.js

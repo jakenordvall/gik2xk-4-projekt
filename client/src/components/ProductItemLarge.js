@@ -5,59 +5,134 @@ import {
   CardMedia,
   Typography,
   Button,
+  Grid,
 } from "@mui/material";
 import { userContext } from "../App";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { addProductToCart } from "../models/CartModel";
+import Rating from "@mui/material/Rating";
+import Box from "@mui/material/Box";
+import StarIcon from "@mui/icons-material/Star";
+import { addNewRating } from "../models/RatingModel";
 
-function ProductItemLarge({ product }) {
+const labels = {
+  0.5: "Useless",
+  1: "Useless+",
+  1.5: "Poor",
+  2: "Poor+",
+  2.5: "Ok",
+  3: "Ok+",
+  3.5: "Good",
+  4: "Good+",
+  4.5: "Excellent",
+  5: "Excellent+",
+};
+
+function getLabelText(value) {
+  return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
+}
+
+function ProductItemLarge({ product, clicked, setClicked }) {
+  const [value, setValue] = useState(0);
+  const [hover, setHover] = useState(-1);
+
   const { signedInUser } = useContext(userContext);
+
   return (
-    <Card elevation={5} sx={{ mt: 10, marginX: "1rem" }}>
-      <CardMedia
-        sx={{ height: 300, width: "100%" }}
-        image={
-          product.imageUrl || `${process.env.PUBLIC_URL}/images/placeholder.png`
-        }
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {product.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {product.description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          onClick={() => {
-            if (signedInUser && signedInUser.cart) {
-              let cartId = signedInUser.cart.id;
-              let productId = product.id;
-              addProductToCart({ cartId, productId }).then(() => {
-                alert(`Product ${product.title} has been added to your cart`);
-              });
-            } else {
-              alert("U have to log in");
-            }
-          }}
-          fullWidth
-          variant="contained"
-          size="small"
-          sx={{
-            fontFamily: "Happy Monkey, cursive",
-            fontWeight: "bold",
-            background: "#efb8eb",
-            ":hover": {
-              background: "#d66dee",
-            },
-          }}
-        >
-          Add to cart
-        </Button>
-      </CardActions>
-    </Card>
+    <>
+      <Card elevation={5} sx={{ mt: 10, marginX: "1rem" }}>
+        <CardMedia
+          sx={{ height: 300, width: "100%" }}
+          image={
+            product.imageUrl ||
+            `${process.env.PUBLIC_URL}/images/placeholder.png`
+          }
+          title="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {product.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {product.description}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            onClick={() => {
+              if (signedInUser && signedInUser.cart) {
+                let cartId = signedInUser.cart.id;
+                let productId = product.id;
+                addProductToCart({ cartId, productId }).then(() => {
+                  alert(`Product ${product.title} has been added to your cart`);
+                });
+              } else {
+                alert("U have to log in");
+              }
+            }}
+            fullWidth
+            variant="contained"
+            size="small"
+            sx={{
+              fontFamily: "Happy Monkey, cursive",
+              fontWeight: "bold",
+              background: "#efb8eb",
+              ":hover": {
+                background: "#d66dee",
+              },
+            }}
+          >
+            Add to cart
+          </Button>
+          <Box
+            sx={{
+              width: 200,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Rating
+              name="hover-feedback"
+              value={value}
+              precision={0.5}
+              getLabelText={getLabelText}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+                let productId = product.id;
+                addNewRating(productId, newValue);
+                setClicked(true);
+              }}
+              onChangeActive={(event, newHover) => {
+                setHover(newHover);
+              }}
+              emptyIcon={
+                <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+              }
+            />
+            {value !== null && (
+              <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+            )}
+          </Box>
+        </CardActions>
+      </Card>
+      <Typography>Ratings</Typography>
+      <Grid container sx={{ mt: 10 }}>
+        {product.ratings && product.ratings.length > 0 ? (
+          product.ratings.map((rating) => (
+            <Grid item key={`ratingId_${rating.id}`} xs={12} sm={12} md={3}>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={rating.rating}
+                readOnly
+              />
+            </Grid>
+          ))
+        ) : (
+          <Typography>No ratings</Typography>
+        )}
+      </Grid>
+    </>
   );
 }
 

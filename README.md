@@ -13,4 +13,3 @@ TODO:
 
 1. Fixa rating och rating lista och kunna lägga till rating
 2. Design
-3. Fixa conditions så att när en user med cart loggar ut då bör sidan ej crasha

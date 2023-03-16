@@ -38,7 +38,7 @@ function CartView() {
                 fontSize: "3rem",
               }}
             >
-              {signedInUser.firstName}'s cart
+              {signedInUser ? `${signedInUser.firstName}'s cart` : "Cart"}
             </Typography>
           </Paper>
         </Grid>

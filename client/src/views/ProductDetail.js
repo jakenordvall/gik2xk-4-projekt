@@ -11,14 +11,20 @@ function ProductDetail() {
   const productId = params.id;
 
   const [product, setProduct] = useState({});
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     getOne(productId).then((product) => setProduct(product));
-  }, [productId]);
+    setClicked(false);
+  }, [productId, clicked]);
 
   return (
     <>
-      <ProductItemLarge product={product} />
+      <ProductItemLarge
+        product={product}
+        clicked={clicked}
+        setClicked={setClicked}
+      />
     </>
   );
 }
