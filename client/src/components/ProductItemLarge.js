@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Grid,
+  Paper,
 } from "@mui/material";
 import { userContext } from "../App";
 import { useContext, useEffect, useState } from "react";
@@ -37,6 +38,10 @@ function ProductItemLarge({ product, clicked, setClicked }) {
   const [hover, setHover] = useState(-1);
 
   const { signedInUser } = useContext(userContext);
+
+  useEffect(() => {
+    setValue(0);
+  }, [value]);
 
   return (
     <>
@@ -94,7 +99,6 @@ function ProductItemLarge({ product, clicked, setClicked }) {
             <Rating
               name="hover-feedback"
               value={value}
-              precision={0.5}
               getLabelText={getLabelText}
               onChange={(event, newValue) => {
                 setValue(newValue);
@@ -115,23 +119,38 @@ function ProductItemLarge({ product, clicked, setClicked }) {
           </Box>
         </CardActions>
       </Card>
-      <Typography>Ratings</Typography>
-      <Grid container sx={{ mt: 10 }}>
-        {product.ratings && product.ratings.length > 0 ? (
-          product.ratings.map((rating) => (
-            <Grid item key={`ratingId_${rating.id}`} xs={12} sm={12} md={3}>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={rating.rating}
-                readOnly
-              />
-            </Grid>
-          ))
-        ) : (
-          <Typography>No ratings</Typography>
-        )}
-      </Grid>
+      <Paper elevation={5} sx={{ margin: 2 }}>
+        <Paper elevation={5} sx={{ display: "flex", justifyContent: "center" }}>
+          <Typography
+            sx={{
+              fontFamily: "Happy Monkey, cursive",
+              fontWeight: "bold",
+              whiteSpace: "nowrap",
+              fontSize: "2rem",
+            }}
+          >
+            Ratings:
+          </Typography>
+        </Paper>
+        <Grid container sx={{ mt: 1 }}>
+          {product.ratings && product.ratings.length > 0 ? (
+            product.ratings.map((rating) => (
+              <Grid item key={`ratingId_${rating.id}`} xs={12} sm={12} md={3}>
+                <Paper elevation={5} sx={{ margin: 1 }}>
+                  <Rating
+                    name="half-rating-read"
+                    value={rating.rating}
+                    readOnly
+                  />
+                  <Typography>{rating.createdAt}</Typography>
+                </Paper>
+              </Grid>
+            ))
+          ) : (
+            <Typography>No ratings</Typography>
+          )}
+        </Grid>
+      </Paper>
     </>
   );
 }

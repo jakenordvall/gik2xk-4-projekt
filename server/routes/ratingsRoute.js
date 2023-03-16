@@ -84,15 +84,27 @@ router.delete("/", (req, res) => {
     });
 });
 
-router.post("/:productId/:rating", (req, res) => {
+router.post("/:productId/:rating", async (req, res) => {
   const rating = parseFloat(req.params.rating);
   const productId = parseInt(req.params.productId);
   console.log(rating, productId);
+
+  if (isNaN(rating)) {
+    res.status(400).json({ error: "Invalid rating value" });
+    return;
+  }
+
   const invalidData = validate(rating, productId, constraints);
   if (invalidData) {
     res.status(400).json(invalidData);
   } else {
-    createRating(productId, rating);
+    try {
+      const newRating = await createRating(productId, rating);
+      res.status(200).json(newRating);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to create rating" });
+    }
   }
 });
 
