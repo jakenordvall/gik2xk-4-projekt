@@ -75,7 +75,6 @@ function ProductItemLarge({ product, clicked, setClicked }) {
                 alert("U have to log in");
               }
             }}
-            fullWidth
             variant="contained"
             size="small"
             sx={{
