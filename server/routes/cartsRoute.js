@@ -62,6 +62,7 @@ router.post("/:cartId/addProduct", async (req, res) => {
       await cartRow.increment("quantity", { by: 1 });
     } else {
       // Produkten finns inte i kundvagnen, lägg till den och sätt kvantiteten till 1
+      //addProduct kmr från sequlize
       await cart.addProduct(product, {
         through: { quantity: 1 },
       });
