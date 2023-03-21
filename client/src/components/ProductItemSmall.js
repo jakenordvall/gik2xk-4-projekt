@@ -1,4 +1,3 @@
-import "./ProductItemSmall.css";
 import { userContext } from "../App";
 import { useContext } from "react";
 import ProductRating from "./ProductRating";
@@ -55,7 +54,7 @@ function ProductItemSmall({ product }) {
                 alert(`Product ${product.title} has been added to your cart`);
               });
             } else {
-              alert("U have to log in");
+              alert("You have to log in");
             }
           }}
           variant="contained"

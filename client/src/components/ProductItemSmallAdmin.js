@@ -1,6 +1,4 @@
-import "./ProductItemSmall.css";
 import { remove } from "../models/ProductModel";
-import AdminEditView from "../views/EditView";
 
 import {
   Card,

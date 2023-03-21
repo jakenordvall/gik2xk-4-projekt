@@ -1,7 +1,6 @@
 import { Avatar, Grid, Paper, Typography, Box, Button } from "@mui/material";
 import { userContext } from "../App";
 import { useContext, useEffect, useState } from "react";
-import { Container } from "@mui/system";
 import { deleteCartProduct, getCartById } from "../models/CartModel";
 
 function CartView() {
@@ -16,11 +15,12 @@ function CartView() {
       getCartById(cartId).then((result) => {
         setCart(result);
         setCartProducts(result.products);
+        setClicked(false);
       });
     } else {
       setCartProducts(null);
+      setClicked(false);
     }
-    setClicked(false);
   }, [signedInUser, clicked]);
 
   return (
